@@ -27,7 +27,17 @@ class _LocalMealScreenState extends State<LocalMealScreen> {
   }
   
   Future<void> _loadSortedMeals() async {
-    final meals = await _localDatabase.getMealsSorted(dropDownValue);
+    final meals = Hive.box<LocalMeal>('meals_box').values.toList();
+    meals.sort((a, b) {
+      switch (dropDownValue) {
+        case 'name':
+          return a.name.compareTo(b.name);
+        case 'calories':
+          return a.calories.compareTo(b.calories);
+        default:
+          return a.time.compareTo(b.time);
+      }
+    });
     setState(() {
       sortedMeals = meals;
     });
@@ -82,25 +92,33 @@ Future<void> _addMeal(LocalMeal meal, BuildContext context) async {
         ),
         body: Column(
           children: [
-            DropdownButton<String>(
-  value: dropDownValue,
-  items: const [
-    DropdownMenuItem(value: 'time', child: Text('Sort by Time')),
-    DropdownMenuItem(value: 'name', child: Text('Sort by Name')),
-    DropdownMenuItem(value: 'calories', child: Text('Sort by Calories')),
-  ],
-  onChanged: (String? newValue) {
-    if (newValue != null) {
-      setState(() {
-        dropDownValue = newValue;
-      });
-     
-      _localDatabase.getMealsSorted(dropDownValue);
-      // Trigger a rebuild to reflect the new sorting
-     
-    }
-  },
-),
+            Container(
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: DropdownButton<String>(
+                value: dropDownValue,
+                isExpanded: true,
+                underline: const SizedBox(), // Remove default underline
+                style: const TextStyle(color: Colors.black, fontSize: 16.0),
+                items: const [
+                  DropdownMenuItem(value: 'time', child: Text('Sort by Time')),
+                  DropdownMenuItem(value: 'name', child: Text('Sort by Name')),
+                  DropdownMenuItem(value: 'calories', child: Text('Sort by Calories')),
+                ],
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      dropDownValue = newValue;
+                    });
+                    _loadSortedMeals(); // Reload sorted meals based on the selected value
+                  }
+                },
+              ),
+            ),
             TabBar(tabs: [Tab(text: 'Meals'), Tab(text: 'Daily Summary')]),
             Expanded(
               child: TabBarView(
