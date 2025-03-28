@@ -1,0 +1,17 @@
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/cheef-1.png
+  fullscreen: true
+  android_gravity: center
+  ios_content_mode: scaleAspectFit
+
+  android_12:
+    color: "#FFFFFF"
+    fullscreen: true
+    image: assets/images/cheef-1.png
+    android_gravity: center
+    ios_content_mode: scaleAspectFit
+
+
+
+  web: false
