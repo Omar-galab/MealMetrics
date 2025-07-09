@@ -31,7 +31,20 @@ A modern Flutter app to **search, track, and save meals** using [TheMealDB API](
 
 ---
 ---
-📦 Project Structure
+📂 Project Structure
+```bash
+lib/
+├── core/
+├── data/
+│   ├── models/
+│   └── services/
+├── presentation/
+│   ├── pages/
+│   └── widgets/
+├── provider/
+└── main.dart
+
+```
 
 
 
