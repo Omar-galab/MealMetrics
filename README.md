@@ -20,15 +20,11 @@ A modern Flutter app to **search, track, and save meals** using [TheMealDB API](
 ---
 
 ## 📸 Screenshots
-
-> *(You can add images like this once you upload them in the repo or via issues tab)*
-
-<--
 <img src="screenshots/added_meal.jpg" width="300">
 <img src="screenshots/addmeal.jpg" width="300">
 <img src="screenshots/search_meal.jpg" width="300">
 <img src="screenshots/total_cl.jpg" width="300">
--->
+
 
 ---
 ---
